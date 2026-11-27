@@ -40,10 +40,6 @@ flowchart LR
 ```
 
 
-# Mini biorreactor electrónico
-
-Proyecto educativo de bajo costo para supervisar la temperatura y las RPM, controlar la agitación de un motor y mostrar información en una pantalla. Está pensado para pruebas con agua o mezclas inocuas; no para cultivar microorganismos.
-
 ## Firmware
 
 El hardware está basado en un **Arduino Nano V3.x clásico (ATmega328P)**. El firmware previsto leerá una sonda DS18B20 y un sensor Hall A3144, controlará el motor mediante PWM y gestionará la pantalla LCD 1602, los pulsadores y el buzzer.
@@ -53,15 +49,9 @@ El hardware está basado en un **Arduino Nano V3.x clásico (ATmega328P)**. El f
 ### Herramientas y dependencias previstas
 
 - Arduino CLI.
-- Plataforma Arduino AVR: `arduino:avr`.
-- `OneWire` y `DallasTemperature` si el firmware las utiliza para el DS18B20.
-- La librería del LCD dependerá del controlador del adaptador I²C instalado. Hay que identificarlo antes de elegir la librería y la dirección I²C.
+- Plataforma Arduino IDE
 
-Cuando se incorpore el firmware, instala la plataforma con:
+### Resultados esperados 
 
-```powershell
-arduino-cli core update-index
-arduino-cli core install arduino:avr
-arduino-cli board details -b arduino:avr:nano --full
-
+El usuario debería poder compilar el código adjunto en (insertar link), configurando el monitor serial en 11550 baudios, enviando una señal de temperatura y velocidad que podrá ser visualizada cada (cierto intervalo de tiempo) en la pantalla. El hardware de instalación consta de un cable (nombre del cable que va de la placa al computador), que conecta Arduino Nano V3 con el dispositivo empleado con puerto USB para enviar el código. 
 
