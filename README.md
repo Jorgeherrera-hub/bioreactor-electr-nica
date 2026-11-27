@@ -12,6 +12,34 @@ Para la interfaz, hay un conector para una pantalla LCD 16×2 con comunicación 
 
 En conjunto, la electrónica permite controlar el motor y reunir las lecturas de temperatura y velocidad de giro para supervisar el funcionamiento del mini biorreactor.
 
+## Diagrama actualizado del sistema
+
+```mermaid
+flowchart LR
+    PSU["Fuente externa 12 V"] --> J1["J1: entrada de alimentación"]
+    J1 --> D1["D1: protección de polaridad"]
+    D1 --> P12["+12V_PROT"]
+
+    P12 --> MOTOR["Motor DC 12 V"]
+    P12 --> REG["U2: convertidor Murata OKI-78SR-5/1.5"]
+    REG --> P5["+5 V"]
+
+    P5 --> NANO["Arduino Nano V3.x"]
+    GND["GND común"] --- NANO
+
+    NANO -->|"PWM D9"| MOSFET["Q1: MOSFET IRLZ44N"]
+    MOSFET --> MOTOR
+
+    TEMP["Sonda DS18B20"] -->|"DATA, D4"| NANO
+    HALL["Sensor Hall A3144 e imán"] -->|"RPM, D2/INT0"| NANO
+
+    NANO -->|"I²C: A4/A5"| LCD["LCD 1602 con adaptador I²C"]
+    NANO -->|"D8"| NPN["Q2: transistor NPN"]
+    NPN --> BUZZER["Buzzer activo de 5 V"]
+    BUTTONS["Pulsadores externos"] --> NANO
+```
+
+
 # Mini biorreactor electrónico
 
 Proyecto educativo de bajo costo para supervisar la temperatura y las RPM, controlar la agitación de un motor y mostrar información en una pantalla. Está pensado para pruebas con agua o mezclas inocuas; no para cultivar microorganismos.
@@ -35,3 +63,5 @@ Cuando se incorpore el firmware, instala la plataforma con:
 arduino-cli core update-index
 arduino-cli core install arduino:avr
 arduino-cli board details -b arduino:avr:nano --full
+
+
