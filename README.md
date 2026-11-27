@@ -11,3 +11,27 @@ Un MOSFET IRLZ44N permite regular la velocidad de un motor de corriente continua
 Para la interfaz, hay un conector para una pantalla LCD 16×2 con comunicación I²C. Un adaptador de nivel con transistores BSS138 permite comunicar las señales I²C de 3,3 V del arduino con una pantalla que funciona a 5 V. También hay un conector de programación USB-UART y pulsadores para encendido/apagado, regulación, reinicio y modo de carga del arduino.
 
 En conjunto, la electrónica permite controlar el motor y reunir las lecturas de temperatura y velocidad de giro para supervisar el funcionamiento del mini biorreactor.
+
+# Mini biorreactor electrónico
+
+Proyecto educativo de bajo costo para supervisar la temperatura y las RPM, controlar la agitación de un motor y mostrar información en una pantalla. Está pensado para pruebas con agua o mezclas inocuas; no para cultivar microorganismos.
+
+## Firmware
+
+El hardware está basado en un **Arduino Nano V3.x clásico (ATmega328P)**. El firmware previsto leerá una sonda DS18B20 y un sensor Hall A3144, controlará el motor mediante PWM y gestionará la pantalla LCD 1602, los pulsadores y el buzzer.
+
+**El repositorio aún no incluye el código fuente del firmware.** Por ello, todavía no hay un comando ejecutable de compilación o carga ni se pueden confirmar las librerías que usará el programa.
+
+### Herramientas y dependencias previstas
+
+- Arduino CLI.
+- Plataforma Arduino AVR: `arduino:avr`.
+- `OneWire` y `DallasTemperature` si el firmware las utiliza para el DS18B20.
+- La librería del LCD dependerá del controlador del adaptador I²C instalado. Hay que identificarlo antes de elegir la librería y la dirección I²C.
+
+Cuando se incorpore el firmware, instala la plataforma con:
+
+```powershell
+arduino-cli core update-index
+arduino-cli core install arduino:avr
+arduino-cli board details -b arduino:avr:nano --full
